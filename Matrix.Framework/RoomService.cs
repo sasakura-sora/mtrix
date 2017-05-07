@@ -14,7 +14,7 @@ namespace Matrix.Framework
 
         public RoomService()
         {
-            roomRepo = new RoomRepository();
+            roomRepo = new RoomMemoryRepository();
         }
 
         public async Task<Page> PublicRooms()
@@ -69,6 +69,12 @@ namespace Matrix.Framework
         {
             //add userId to the list of invitiees for roomId
             var inviteList = await roomRepo.InviteList(roomId);
+
+            //check ban list
+            if (!inviteList.Contains(userId))
+            {
+                await roomRepo.InviteAdd(userId, roomId);
+            }
         }
 
         public async Task Join(string userId, string roomId)

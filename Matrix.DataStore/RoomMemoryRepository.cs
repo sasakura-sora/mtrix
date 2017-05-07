@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Matrix.DataStore
 {
-    public class RoomRepository : IRoomRepository
+    public class RoomMemoryRepository : IRoomRepository
     {
         public async Task<List<PublicRoomsChunk>> PublicRooms()
         {
