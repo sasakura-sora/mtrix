@@ -33,6 +33,7 @@ namespace Matrix.Server.Controllers
         {
             //TODO: Get the user from auth
             roomService.Invite("", roomId);
+            //send invite event to that user
             return new Model.Standards.Error();
         }
 

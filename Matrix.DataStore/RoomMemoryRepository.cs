@@ -20,12 +20,17 @@ namespace Matrix.DataStore
             return result;
         }
 
-        public async Task<string> CreateRoom(PublicRoomsChunk newRoom)
+        public async Task<string> RoomCreate(PublicRoomsChunk newRoom)
         {
             newRoom.room_id = Guid.NewGuid().ToString();
             Memory.RoomStore.Rooms.Add(newRoom);
             
             return newRoom.room_id;
+        }
+        
+        public async Task<PublicRoomsChunk> Room(string roomId)
+        {
+            return new PublicRoomsChunk();
         }
 
         public async Task<List<string>> InviteList(string roomId)
@@ -42,5 +47,6 @@ namespace Matrix.DataStore
         {
             Memory.InviteStore.Invites[roomId].Remove(userId);
         }
+
     }
 }

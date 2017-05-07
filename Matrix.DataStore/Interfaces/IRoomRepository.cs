@@ -7,7 +7,9 @@ namespace Matrix.DataStore.Interfaces
     public interface IRoomRepository
     {
         Task<List<PublicRoomsChunk>> PublicRooms();
-        Task<string> CreateRoom(PublicRoomsChunk newRoom);
+        Task<string> RoomCreate(PublicRoomsChunk newRoom);
+
+        Task<PublicRoomsChunk> Room(string roomId);
 
         Task<List<string>> InviteList(string roomId);
         Task InviteAdd(string userId, string roomId);

@@ -80,9 +80,20 @@ namespace Matrix.Framework
         public async Task Join(string userId, string roomId)
         {
             //check if public
-            //public -> invite and join
-            //private -> check invite list
-            //in invite list -> join
+            var room = await roomRepo.Room(roomId);
+            if (room.guest_can_join)
+            {
+                //public -> invite and join
+                return;
+            }
+
+            var invites = await roomRepo.InviteList(roomId);
+            if (invites.Contains(userId))
+            {
+                //in invite list -> join
+            }
+
+            return;//rejected
         }
 
         public async Task Forget(string userId, string roomId)
@@ -101,7 +112,9 @@ namespace Matrix.Framework
 
         public async Task Kick(string userId, string roomid)
         {
-
+            //check admin level
+            //clear pending invites?
+            //leave room
         }
 
         public async Task Members(string roomId)
