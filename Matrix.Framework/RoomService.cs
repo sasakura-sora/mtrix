@@ -68,6 +68,7 @@ namespace Matrix.Framework
         public async Task Invite(string userId, string roomId)
         {
             //add userId to the list of invitiees for roomId
+            var inviteList = await roomRepo.InviteList(roomId);
         }
 
         public async Task Join(string userId, string roomId)

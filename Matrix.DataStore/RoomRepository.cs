@@ -27,5 +27,20 @@ namespace Matrix.DataStore
             
             return newRoom.room_id;
         }
+
+        public async Task<List<string>> InviteList(string roomId)
+        {
+            return Memory.InviteStore.Invites[roomId];
+        }
+
+        public async Task InviteAdd(string userId, string roomId)
+        {
+            Memory.InviteStore.Invites[roomId].Add(userId);
+        }
+
+        public async Task InviteRemove(string userId, string roomId)
+        {
+            Memory.InviteStore.Invites[roomId].Remove(userId);
+        }
     }
 }

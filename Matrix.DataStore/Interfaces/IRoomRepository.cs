@@ -8,5 +8,9 @@ namespace Matrix.DataStore.Interfaces
     {
         Task<List<PublicRoomsChunk>> PublicRooms();
         Task<string> CreateRoom(PublicRoomsChunk newRoom);
+
+        Task<List<string>> InviteList(string roomId);
+        Task InviteAdd(string userId, string roomId);
+        Task InviteRemove(string userId, string roomId);
     }
 }
