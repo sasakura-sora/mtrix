@@ -1,6 +1,7 @@
 ﻿using Matrix.Model.Rooms;
 using Matrix.Model.Standards;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Matrix.Framework.Interfaces
@@ -9,6 +10,7 @@ namespace Matrix.Framework.Interfaces
     {
         Task<Page> PublicRooms();
         Task<RoomCreateResponse> Create(RoomCreate createRoom);
+
         Task Invite(string userId, string roomId);
         Task Join(string userId, string roomId);
         Task Forget(string userId, string roomId);
@@ -18,7 +20,10 @@ namespace Matrix.Framework.Interfaces
         Task Ban(string userId, string roomId);
         Task UnBan(string userId, string roomId);
 
+        Task<string> Find(string roomId);
+        Task<string> AliasFind(string alias);
+
         /* events */
-        Task Members(string roomId);
+        Task<List<string>> Members(string roomId);
     }
 }

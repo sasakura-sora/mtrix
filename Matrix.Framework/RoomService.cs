@@ -5,6 +5,7 @@ using Matrix.DataStore.Interfaces;
 using Matrix.DataStore;
 using Matrix.Model.Rooms;
 using System;
+using System.Collections.Generic;
 
 namespace Matrix.Framework
 {
@@ -52,7 +53,7 @@ namespace Matrix.Framework
             newRoomChunk.topic = createRoom.topic;
             newRoomChunk.name = createRoom.name;
             
-            var newId = await roomRepo.CreateRoom(newRoomChunk);
+            var newId = await roomRepo.RoomCreate(newRoomChunk);
 
             foreach (var user in createRoom.invite)
             {
@@ -80,10 +81,13 @@ namespace Matrix.Framework
         public async Task Join(string userId, string roomId)
         {
             //check if public
-            var room = await roomRepo.Room(roomId);
+            var room = await roomRepo.RoomGet(roomId);
             if (room.guest_can_join)
             {
                 //public -> invite and join
+                await roomRepo.InviteAdd(userId, roomId);
+                await roomRepo.Join(userId, roomId);
+                await roomRepo.InviteRemove(userId, roomId);
                 return;
             }
 
@@ -91,6 +95,8 @@ namespace Matrix.Framework
             if (invites.Contains(userId))
             {
                 //in invite list -> join
+                await roomRepo.Join(userId, roomId);
+                await roomRepo.InviteRemove(userId, roomId);
             }
 
             return;//rejected
@@ -99,36 +105,51 @@ namespace Matrix.Framework
         public async Task Forget(string userId, string roomId)
         {
             //leave room
+            await this.Leave(userId, roomId);
             //probably nothing
             //drops history if everyone forgets it
         }
 
         public async Task Leave(string userId, string roomId)
         {
-            //check if in room
-            //not -> reject pending invite
-            //yes -> leave
+            var members = await roomRepo.Members(roomId);
+            if (members.Contains(userId))
+            {
+                await roomRepo.Leave(userId, roomId);
+            }
+            
+            var invites = await roomRepo.InviteList(roomId);
+            if (invites.Contains(userId))
+            {
+                await roomRepo.InviteRemove(userId, roomId);
+            }
         }
 
-        public async Task Kick(string userId, string roomid)
+        public async Task Kick(string userId, string roomId)
         {
             //check admin level
-            //clear pending invites?
+            //clear pending invites
             //leave room
+            await this.Leave(userId, roomId);
         }
 
-        public async Task Members(string roomId)
+        public async Task<List<string>> Members(string roomId)
         {
             //A list of members of the room. 
+            var members = await roomRepo.Members(roomId);
             //If you are joined to the room then this will be the current members of the room. 
-            //If you have left te room then this will be the members of the room when you left.
+            //If you have left the room then this will be the members of the room when you left.
+
+            return members;
         }
 
         public async Task Ban(string userId, string roomId)
         {
             //check admin level
             //clear invites
+            await this.Leave(userId, roomId);
             //leave them
+            await roomRepo.Ban(userId, roomId);
             //add to ban list
         }
 
@@ -136,6 +157,17 @@ namespace Matrix.Framework
         {
             //check admin level
             //remove from ban list            
+            await roomRepo.UnBan(userId, roomId);
+        }
+
+        public async Task<string> AliasFind(string alias)
+        {
+            return await roomRepo.AliasFind(alias);
+        }
+
+        public async Task<string> Find(string roomId)
+        {
+            return await roomRepo.Find(roomId);
         }
     }
 }

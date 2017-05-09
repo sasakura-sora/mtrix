@@ -5,6 +5,13 @@ namespace Matrix.DataStore.Memory
 {
     public static class RoomStore
     {
+        static RoomStore()
+        {
+            Members = new Dictionary<string, List<string>>();
+            Bans = new Dictionary<string, List<string>>();
+            Alias = new Dictionary<string, string>();
+        }
+
         private static List<PublicRoomsChunk> rooms { get; set; }
 
         public static List<PublicRoomsChunk> Rooms
@@ -18,5 +25,11 @@ namespace Matrix.DataStore.Memory
                 return rooms;
             }
         }
+
+        public static Dictionary<string, List<string>> Members;
+
+        public static Dictionary<string, List<string>> Bans;
+
+        public static Dictionary<string, string> Alias;
     }
 }

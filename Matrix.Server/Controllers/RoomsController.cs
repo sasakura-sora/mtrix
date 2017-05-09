@@ -32,19 +32,33 @@ namespace Matrix.Server.Controllers
         public Model.Standards.Error Invite(string roomId, Invite roomInvite)
         {
             //TODO: Get the user from auth
-            roomService.Invite("", roomId);
+            //Check user can invite into that room
+            roomService.Invite(roomInvite.user_id, roomId);
             //send invite event to that user
             return new Model.Standards.Error();
         }
 
         [HttpPost]
         [Route("join/{roomIdOrAlias}")]
-        public Model.Standards.Error AliasInvite(string roomIdOrAlias, ThirdPartySigned signature)
+        public async Task<Model.Standards.Error> AliasInvite(string roomIdOrAlias, ThirdPartySigned signature)
         {
             //work out if roomId or Alias
-            //neither -> error
-            //Alias -> look up roomId
-            roomService.Join("", "");
+            var aliasId = await roomService.AliasFind(roomIdOrAlias);
+            var roomId = "";
+            if (aliasId != "")
+            {
+                roomId = await roomService.Find(aliasId);
+            }
+            else
+            {
+                roomId = await roomService.Find(roomIdOrAlias);
+            }
+                        
+            if(roomId != "")
+            {
+                await roomService.Join("", roomId);
+                return new Model.Standards.Error();
+            }
 
             //return roomid
             return new Model.Standards.Error();

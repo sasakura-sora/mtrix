@@ -28,9 +28,9 @@ namespace Matrix.DataStore
             return newRoom.room_id;
         }
         
-        public async Task<PublicRoomsChunk> Room(string roomId)
+        public async Task<PublicRoomsChunk> RoomGet(string roomId)
         {
-            return new PublicRoomsChunk();
+            return Memory.RoomStore.Rooms.Find(x => x.room_id == roomId);
         }
 
         public async Task<List<string>> InviteList(string roomId)
@@ -48,5 +48,49 @@ namespace Matrix.DataStore
             Memory.InviteStore.Invites[roomId].Remove(userId);
         }
 
+        public async Task Join(string userId, string roomid)
+        {
+            Memory.RoomStore.Members[roomid].Add(userId);
+        }
+
+        public async Task Leave(string userId, string roomid)
+        {
+            Memory.RoomStore.Members[roomid].Remove(userId);
+        }
+
+        public async Task<List<string>> Members(string roomid)
+        {
+            return Memory.RoomStore.Members[roomid];
+        }
+
+        public async Task Ban(string userId, string roomId)
+        {
+            Memory.RoomStore.Bans[roomId].Add(userId);
+        }
+
+        public async Task UnBan(string userId, string roomId)
+        {
+            Memory.RoomStore.Bans[roomId].Remove(userId);
+        }
+
+        public async Task AliasAdd(string roomId, string alias)
+        {
+            Memory.RoomStore.Alias.Add(alias, roomId);
+        }
+
+        public async Task<string> AliasFind(string alias)
+        {
+            return Memory.RoomStore.Alias[alias];
+        }
+
+        public async Task AliasRemove(string roomId, string alias)
+        {
+            Memory.RoomStore.Alias.Remove(alias);
+        }
+
+        public async Task<string> Find(string roomId)
+        {
+            return Memory.RoomStore.Rooms.Find(x => x.room_id == roomId).room_id;
+        }
     }
 }
