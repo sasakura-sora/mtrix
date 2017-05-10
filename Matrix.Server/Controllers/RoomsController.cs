@@ -125,23 +125,23 @@ namespace Matrix.Server.Controllers
 
         [HttpGet]
         [Route("rooms/{roomId}/state")]
-        public List<StateEvent> State(string roomId)
+        public async Task<List<StateEvent>> State(string roomId)
         {
-            return new List<StateEvent>();
+            return await eventService.StatesGet(roomId);
         }
 
         [HttpGet]
         [Route("rooms/{roomId}/state/{eventType}")]
-        public StateEvent StateGet(string roomId, string eventType)
+        public async Task<StateEvent> StateGet(string roomId, string eventType)
         {
-            return new StateEvent();
+            return await eventService.StateGet(roomId, eventType);
         }
 
         [HttpPut]
         [Route("rooms/{roomId}/state/{eventType}")]
-        public string StatePut(string roomId, string eventType)
+        public async Task<string> StatePut(string roomId, string eventType, [FromBody]BaseEvent event_object)
         {
-            return "";
+            return await eventService.StateAdd(roomId, eventType, event_object);
         }
 
         [HttpGet]
@@ -153,7 +153,7 @@ namespace Matrix.Server.Controllers
 
         [HttpPut]
         [Route("rooms/{roomId}/state/{eventType}/{stateKey}")]
-        public string StateKeyPut(string roomId, string eventType, string stateKey)
+        public string StateKeyPut(string roomId, string eventType, string stateKey, [FromBody]BaseEvent event_object)
         {
             return "";
         }
