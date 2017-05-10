@@ -10,6 +10,5 @@ namespace Matrix.Server.Controllers
         {
             return new BaseEvent();
         }
-            
     }
 }

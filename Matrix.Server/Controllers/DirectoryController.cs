@@ -26,6 +26,7 @@ namespace Matrix.Server.Controllers
         [Route("directory/room/{roomAlias}")]
         public Model.Standards.Error DeleteAlias(string roomAlias)
         {
+            roomService.AliasRemove(roomAlias);
             return new Model.Standards.Error();
         }
 

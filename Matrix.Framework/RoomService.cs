@@ -162,11 +162,14 @@ namespace Matrix.Framework
 
         public async Task<string> AliasAdd(AliasCreate alias)
         {
+            await roomRepo.AliasAdd("", "");
+
             return "";
         }
 
         public async Task<string> AliasRemove(string alias)
         {
+            await roomRepo.AliasRemove("", alias);
             return "";
         }
     }
