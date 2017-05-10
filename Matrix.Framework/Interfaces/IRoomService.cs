@@ -23,7 +23,6 @@ namespace Matrix.Framework.Interfaces
         Task<string> Find(string roomId);
         Task<string> AliasFind(string alias);
 
-        /* events */
-        Task<List<string>> Members(string roomId);
+        
     }
 }

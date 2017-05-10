@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\BaseEvent.cs" />
+    <Compile Include="Events\Content\BaseContent.cs" />
     <Compile Include="Events\Content\RoomAliases.cs" />
     <Compile Include="Events\Content\RoomCanonicalAlias.cs" />
     <Compile Include="Events\Content\RoomCreate.cs" />

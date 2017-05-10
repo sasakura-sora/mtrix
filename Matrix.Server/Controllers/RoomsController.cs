@@ -13,10 +13,12 @@ namespace Matrix.Server.Controllers
     public class RoomsController : ApiController
     {
         private readonly IRoomService roomService;
+        private readonly IEventService eventService;
 
         public RoomsController()
         {
             roomService = new RoomService();
+            eventService = new EventService();
         }
 
         [HttpPost]
@@ -167,7 +169,7 @@ namespace Matrix.Server.Controllers
         [Route("rooms/{roomId}/members")]
         public List<MemberEvent> Members(string roomId)
         {
-            roomService.Members(roomId);
+            eventService.Members(roomId);
             return new List<MemberEvent>();
         }
 
