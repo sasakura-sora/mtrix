@@ -5,7 +5,7 @@ using Matrix.DataStore.Interfaces;
 using Matrix.DataStore;
 using Matrix.Model.Rooms;
 using System;
-using System.Collections.Generic;
+using Matrix.Model.Rooms.Alias;
 
 namespace Matrix.Framework
 {
@@ -150,14 +150,24 @@ namespace Matrix.Framework
             await roomRepo.UnBan(userId, roomId);
         }
 
-        public async Task<string> AliasFind(string alias)
-        {
-            return await roomRepo.AliasFind(alias);
-        }
-
         public async Task<string> Find(string roomId)
         {
             return await roomRepo.Find(roomId);
+        }
+
+        public async Task<string> AliasFind(string alias)
+        {
+            return await roomRepo.AliasFind(alias);
+        }       
+
+        public async Task<string> AliasAdd(AliasCreate alias)
+        {
+            return "";
+        }
+
+        public async Task<string> AliasRemove(string alias)
+        {
+            return "";
         }
     }
 }

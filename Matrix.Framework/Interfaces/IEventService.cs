@@ -6,7 +6,7 @@ namespace Matrix.Framework.Interfaces
 {
     public interface IEventService
     {
-        Task<List<string>> Members(string roomId);
+        Task<List<MemberEvent>> Members(string roomId);
         Task<List<StateEvent>> StatesGet(string roomId);
 
         Task<StateEvent> StateGet(string roomId, string eventId);

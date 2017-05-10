@@ -146,16 +146,16 @@ namespace Matrix.Server.Controllers
 
         [HttpGet]
         [Route("rooms/{roomId}/state/{eventType}/{stateKey}")]
-        public StateEvent StateKeyGet(string roomId, string eventType, string stateKey)
+        public async Task<StateEvent> StateKeyGet(string roomId, string eventType, string stateKey)
         {
-            return new StateEvent();
+            return await eventService.StateGet(roomId, eventType, stateKey);
         }
 
         [HttpPut]
         [Route("rooms/{roomId}/state/{eventType}/{stateKey}")]
-        public string StateKeyPut(string roomId, string eventType, string stateKey, [FromBody]BaseEvent event_object)
+        public async Task<string> StateKeyPut(string roomId, string eventType, string stateKey, [FromBody]BaseEvent event_object)
         {
-            return "";
+            return await eventService.StateAdd(roomId, eventType, event_object, stateKey);
         }
 
         [HttpPut]

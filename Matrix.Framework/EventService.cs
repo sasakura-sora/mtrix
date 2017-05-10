@@ -4,7 +4,6 @@ using Matrix.Framework.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Matrix.Model.Events;
-using System;
 
 namespace Matrix.Framework
 {
@@ -17,14 +16,14 @@ namespace Matrix.Framework
             roomRepo = new RoomMemoryRepository();
         }
 
-        public async Task<List<string>> Members(string roomId)
+        public async Task<List<MemberEvent>> Members(string roomId)
         {
             //A list of members of the room. 
             var members = await roomRepo.Members(roomId);
             //If you are joined to the room then this will be the current members of the room. 
             //If you have left the room then this will be the members of the room when you left.
 
-            return members;
+            return new List<MemberEvent>();
         }
 
         public async Task<List<StateEvent>> StatesGet(string roomId)

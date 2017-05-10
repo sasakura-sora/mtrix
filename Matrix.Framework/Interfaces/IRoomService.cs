@@ -1,7 +1,6 @@
 ﻿using Matrix.Model.Rooms;
+using Matrix.Model.Rooms.Alias;
 using Matrix.Model.Standards;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Matrix.Framework.Interfaces
@@ -21,8 +20,9 @@ namespace Matrix.Framework.Interfaces
         Task UnBan(string userId, string roomId);
 
         Task<string> Find(string roomId);
-        Task<string> AliasFind(string alias);
 
-        
+        Task<string> AliasFind(string alias);
+        Task<string> AliasAdd(AliasCreate alias);
+        Task<string> AliasRemove(string alias);        
     }
 }
