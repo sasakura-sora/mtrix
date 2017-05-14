@@ -52,6 +52,7 @@
     <Compile Include="Events\Content\RoomPowerLevels.cs" />
     <Compile Include="Events\Content\RoomRedaction.cs" />
     <Compile Include="Events\MemberEvent.cs" />
+    <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="Events\RoomEvent.cs" />
     <Compile Include="Events\StateEvent.cs" />
     <Compile Include="Filters\Filter.cs" />
@@ -59,6 +60,8 @@
     <Compile Include="Filters\RoomEventFilter.cs" />
     <Compile Include="Filters\RoomFilter.cs" />
     <Compile Include="Invite3pid.cs" />
+    <Compile Include="Messages\MessageLocation.cs" />
+    <Compile Include="Messages\MessageText.cs" />
     <Compile Include="Preset.cs" />
     <Compile Include="Profiles\AvatarUrl.cs" />
     <Compile Include="Profiles\DisplayName.cs" />

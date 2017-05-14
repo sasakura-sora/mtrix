@@ -167,10 +167,9 @@ namespace Matrix.Server.Controllers
         
         [HttpGet]
         [Route("rooms/{roomId}/members")]
-        public List<MemberEvent> Members(string roomId)
+        public async Task<List<MemberEvent>> Members(string roomId)
         {
-            eventService.Members(roomId);
-            return new List<MemberEvent>();
+            return await eventService.Members(roomId);
         }
 
         [HttpGet]
