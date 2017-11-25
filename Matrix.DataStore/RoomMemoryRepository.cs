@@ -73,14 +73,20 @@ namespace Matrix.DataStore
             Memory.RoomStore.Bans[roomId].Remove(userId);
         }
 
-        public async Task AliasAdd(string roomId, string alias)
+        public async Task<PublicRoomsChunk> IdFind(string roomId)
         {
-            Memory.RoomStore.Alias.Add(alias, roomId);
+            return Memory.RoomStore.Rooms.Find(x => x.room_id == roomId);
         }
 
         public async Task<string> AliasFind(string alias)
         {
+            //return the room_id
             return Memory.RoomStore.Alias[alias];
+        }
+
+        public async Task AliasAdd(string roomId, string alias)
+        {
+            Memory.RoomStore.Alias.Add(alias, roomId);
         }
 
         public async Task AliasRemove(string roomId, string alias)
@@ -88,9 +94,5 @@ namespace Matrix.DataStore
             Memory.RoomStore.Alias.Remove(alias);
         }
 
-        public async Task<string> Find(string roomId)
-        {
-            return Memory.RoomStore.Rooms.Find(x => x.room_id == roomId).room_id;
-        }
     }
 }

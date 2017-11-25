@@ -19,7 +19,7 @@ namespace Matrix.Framework.Interfaces
         Task Ban(string userId, string roomId);
         Task UnBan(string userId, string roomId);
 
-        Task<string> Find(string roomId);
+        Task<PublicRoomsChunk> IdFind(string roomId);
 
         Task<string> AliasFind(string alias);
         Task<string> AliasAdd(AliasCreate alias);

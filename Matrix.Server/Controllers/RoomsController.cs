@@ -17,8 +17,12 @@ namespace Matrix.Server.Controllers
 
         public RoomsController()
         {
-            roomService = new RoomService();
+            var memoryStore = new DataStore.RoomMemoryRepository();
             eventService = new EventService();
+
+            roomService = new RoomService(memoryStore, eventService);
+
+            
         }
 
         [HttpPost]
@@ -46,19 +50,19 @@ namespace Matrix.Server.Controllers
         {
             //work out if roomId or Alias
             var aliasId = await roomService.AliasFind(roomIdOrAlias);
-            var roomId = "";
+            PublicRoomsChunk room;
             if (aliasId != "")
             {
-                roomId = await roomService.Find(aliasId);
+                room = await roomService.IdFind(aliasId);
             }
             else
             {
-                roomId = await roomService.Find(roomIdOrAlias);
+                room = await roomService.IdFind(roomIdOrAlias);
             }
                         
-            if(roomId != "")
+            if(room.room_id != "")
             {
-                await roomService.Join("", roomId);
+                await roomService.Join("", room.room_id);
                 return new Model.Standards.Error();
             }
 

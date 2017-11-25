@@ -23,10 +23,11 @@ namespace Matrix.DataStore.Interfaces
         Task Ban(string userId, string roomId);
         Task UnBan(string userId, string roomId);
 
-        Task AliasAdd(string roomId, string alias);
+        Task<PublicRoomsChunk> IdFind(string roomId);
+
         Task<string> AliasFind(string alias);
+        Task AliasAdd(string roomId, string alias);
         Task AliasRemove(string roomId, string alias);
 
-        Task<string> Find(string roomId);
     }
 }

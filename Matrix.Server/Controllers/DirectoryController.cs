@@ -11,7 +11,9 @@ namespace Matrix.Server.Controllers
 
         public DirectoryController()
         {
-            roomService = new RoomService();
+            var memoryStore = new DataStore.RoomMemoryRepository();
+            var eventService = new EventService();
+            roomService = new RoomService(memoryStore, eventService);
         }
 
         [HttpPut]

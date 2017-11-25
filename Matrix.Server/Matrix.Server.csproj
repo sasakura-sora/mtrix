@@ -232,6 +232,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Matrix.DataStore\Matrix.DataStore.csproj">
+      <Project>{d4efd844-2533-42bb-836e-d96cdce6ca40}</Project>
+      <Name>Matrix.DataStore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Matrix.Framework\Matrix.Framework.csproj">
       <Project>{8C1F442B-47A2-4E8E-BC88-99BEF5D1045A}</Project>
       <Name>Matrix.Framework</Name>

@@ -2,7 +2,6 @@
 using Matrix.Framework.Interfaces;
 using Matrix.Model.Standards;
 using Matrix.DataStore.Interfaces;
-using Matrix.DataStore;
 using Matrix.Model.Rooms;
 using Matrix.Model.Rooms.Alias;
 using CuttingEdge.Conditions;
@@ -12,17 +11,15 @@ namespace Matrix.Framework
     public class RoomService : IRoomService
     {
         private IRoomRepository roomRepo { get; set; }
+        private IEventService events { get; set; }
 
-        public RoomService()
-        {
-            roomRepo = new RoomMemoryRepository();
-        }
-
-        public RoomService(IRoomRepository roomRepo)
+        public RoomService(IRoomRepository roomRepo, IEventService eventsService)
         {
             Condition.Requires(roomRepo).IsNotNull();
+            Condition.Requires(eventsService).IsNotNull();
 
             this.roomRepo = roomRepo;
+            this.events = eventsService;
         }
 
         public async Task<Page> PublicRooms()
@@ -106,6 +103,7 @@ namespace Matrix.Framework
                 //in invite list -> join
                 await roomRepo.Join(userId, roomId);
                 await roomRepo.InviteRemove(userId, roomId);
+                //event it
             }
 
             return;//rejected
@@ -159,9 +157,9 @@ namespace Matrix.Framework
             await roomRepo.UnBan(userId, roomId);
         }
 
-        public async Task<string> Find(string roomId)
+        public async Task<PublicRoomsChunk> IdFind(string roomId)
         {
-            return await roomRepo.Find(roomId);
+            return await roomRepo.IdFind(roomId);
         }
 
         public async Task<string> AliasFind(string alias)
