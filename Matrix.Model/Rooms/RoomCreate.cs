@@ -5,6 +5,14 @@ namespace Matrix.Model.Rooms
 {
     public class RoomCreate
     {
+        public RoomCreate()
+        {
+            invite = new List<string>();
+            invite_3pid = new List<Invite3pid>();
+            initial_state = new List<StateEvent>();
+        }
+
+
         public List<string> invite { get; set; }
         public string name { get; set; }
         public Visibility visibility { get; set; }

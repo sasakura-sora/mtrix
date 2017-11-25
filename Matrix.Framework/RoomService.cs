@@ -4,8 +4,8 @@ using Matrix.Model.Standards;
 using Matrix.DataStore.Interfaces;
 using Matrix.DataStore;
 using Matrix.Model.Rooms;
-using System;
 using Matrix.Model.Rooms.Alias;
+using CuttingEdge.Conditions;
 
 namespace Matrix.Framework
 {
@@ -16,6 +16,13 @@ namespace Matrix.Framework
         public RoomService()
         {
             roomRepo = new RoomMemoryRepository();
+        }
+
+        public RoomService(IRoomRepository roomRepo)
+        {
+            Condition.Requires(roomRepo).IsNotNull();
+
+            this.roomRepo = roomRepo;
         }
 
         public async Task<Page> PublicRooms()
@@ -37,6 +44,8 @@ namespace Matrix.Framework
         {
             //Create room
             var newRoomChunk = new PublicRoomsChunk();
+
+            //string.Compare("", "", System.Globalization.CompareOptions.OrdinalIgnoreCase);
 
             //TODO: Mappers?
             newRoomChunk.name = createRoom.name;
